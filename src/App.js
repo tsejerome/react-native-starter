@@ -1,5 +1,7 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { NavigationStack } from "./screens/navigator";
+import { store } from "./redux/store";
 
 export class App extends React.Component {
 
@@ -9,7 +11,11 @@ export class App extends React.Component {
 
 	render() {
 		return (
-			<NavigationStack/>
+			<Provider
+				store={store}
+			>
+				<NavigationStack/>
+			</Provider>
 		);
 	}
 

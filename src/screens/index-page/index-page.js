@@ -1,19 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CounterAction } from "../../redux/actions/counter-action";
 import { styles } from "./styles";
 
 class Component extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			counter: 0
-		};
 	}
 
 	render() {
 		return (
-			<View>
+			<View
+				style={styles.container}
+			>
 				<Text>
 					Welcome to react-native!
 				</Text>
@@ -34,24 +35,24 @@ class Component extends React.Component {
 					</Text>
 				</TouchableOpacity>
 				<Text>
-					You've pressed the button {this.state.counter} times.
+					You've pressed the button {this.props.counter} times.
 				</Text>
 			</View>
-		)
+		);
 	}
 
 	_handleCounterClick = () => {
-		this.setState({
-			counter: this.state.counter + 1
-		});
+		this.props.dispatch(CounterAction.increment());
 	};
 
 	_handleCounterReset = () => {
-		this.setState({
-			counter: 0
-		});
+		this.props.dispatch(CounterAction.reset());
 	}
 
 }
 
-export const IndexPage = Component;
+export const IndexPage = connect((store) => {
+	return {
+		counter: store['CounterReducer']['counter']
+	};
+})(Component);
